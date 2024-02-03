@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="author" content="Kelv Gooding">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../static/css/style.css">
+        <title>User Input Form</title>
+    </head>
+    <body>
+        <header>
+        </header>
+
+        <main>
+
+            <div class="form-border">
+                <form method="post">
+
+                    <h3>First Name:</h3>
+                    <input type="text" min="1" max="50" name="first_name" class="input-fields" required/>
+                    <br>
+
+                    <h3>Last Name:</h3>
+                    <input type="text" min="1" max="50" name="last_name" class="input-fields" required/>
+                    <br>
+
+                    <h3>Age:</h3>
+                    <input type="number" min="1" name="age" class="input-fields" required />
+                    <br>
+
+                    <h3>City/Towns:</h3>
+                    <select name="location" class="input-select" required>
+                        <option value="Select an Option"></option>
+                        {% for i in towns %}
+                            <option value={{i}}>{{i}}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <br><br>
+                    
+                    <input type="submit" value="Submit" class="input-button"/>
+                </form>
+
+                {% for i in get_flashed_messages()%}
+                    <br>
+                    {{i}}
+                {% endfor %}
+                
+            </div>
+
+        </main>
+
+        <footer>
+        </footer>
+    </body>
+</html>
