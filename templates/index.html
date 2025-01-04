@@ -27,10 +27,10 @@
                     <input type="number" min="1" name="age" class="input-fields" required />
                     <br>
 
-                    <h3>City/Towns:</h3>
+                    <h3>Location:</h3>
                     <select name="location" class="input-select" required>
                         <option value="Select an Option"></option>
-                        {% for i in towns %}
+                        {% for i in list_of_counties %}
                             <option value={{i}}>{{i}}</option>
                         {% endfor %}
                     </select>
