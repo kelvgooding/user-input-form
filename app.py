@@ -1,24 +1,36 @@
 """
 Author: Kelv Gooding
 Created: 2024-01-01
-Updated: 2025-01-04
-Version: 1.1
+Updated: 2025-03-11
+Version: 1.2
 """
 
 # Modules
 
 from flask import Flask, render_template, request, flash
-from modules import db_check
 import os
-import sqlite3
+import mysql.connector
+from modules import db_check
+from modules import config
+
+# MariaDB Variables
+
+conn = mysql.connector.connect(
+    host=config.DB_HOST,
+    port='3306',
+    user=config.DB_USER,
+    password=config.DB_PASSWORD,
+    database='sample-app'
+)
 
 # SQLite3 Variables
 
-db_filename = 'user_input_form.db'
-base_path = os.path.dirname(os.path.abspath(__file__))
-sql_script = f'{base_path}/scripts/sql/create_tables.sql'
-db_check.check_db(f'{base_path}', f'{db_filename}', f'{sql_script}')
-conn = db_check.sqlite3.connect(os.path.join(base_path, db_filename), check_same_thread=False)
+# db_filename = 'user_input_form.db'
+# base_path = os.path.dirname(os.path.abspath(__file__))
+# sql_script = f'{base_path}/scripts/sql/create_tables.sql'
+# db_check.check_db(f'{base_path}', f'{db_filename}', f'{sql_script}')
+# conn = db_check.sqlite3.connect(os.path.join(base_path, db_filename), check_same_thread=False)
+
 c = conn.cursor()
 
 # Flask Variables
@@ -44,7 +56,7 @@ def index():
 def customers():
 
     if request.method == "POST":
-        c.execute('INSERT INTO user VALUES (?, ?, ?, ?)', (request.form.get("first_name"), request.form.get("last_name"), request.form.get("age"), request.form.get("location"),))
+        c.execute('INSERT INTO user (first_name, last_name, age, location) VALUES (%s, %s, %s, %s)', (request.form.get("first_name"), request.form.get("last_name"), request.form.get("age"), request.form.get("location")))
         conn.commit()
 
         flash("A new entry has now been added!")
