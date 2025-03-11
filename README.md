@@ -33,21 +33,53 @@ This can now be accessed via web browser - http://localhost:5000
 Clone the repository:
 
 ```
-git clone git@github.com:kelvgooding/user-input-form.git
+git clone git@github.com:kelvgooding/sample-app.git
 ```
 
 Navigate to the cloned repository directory
 
-Run the following command to build the Docker image
+The following file will need to be updated before running the images/containers:
+
+* DB_HOST = ''
+* DB_USER = ''
+* DB_PASSWORD = ''
 
 ```
-sudo docker build -t user-input-form .
+/modules/config.py
 ```
 
-Run the following command to create and start the container:
+Run the following command to build the Docker images
 
 ```
-sudo docker run -itd -p 5000:5000 user-input-form
+sudo docker pull mariadb:latest
+```
+```
+sudo docker build -t sample-app .
+```
+
+Run the following command to create and start the containers:
+
+```
+docker run -d --name sample-app-db -e MARIADB_ROOT_PASSWORD=password -e MARIADB_DATABASE=sample-app-db -e MARIADB_USER=user -e MARIADB_PASSWORD=password   -p 3306:3306 -v /mnt/usb/sample-app-db:/var/lib/mysql --restart always mariadb:latest
+```
+```
+sudo docker exec -i sample-app-db mysql -u root -p password sample-app-db < ~/repos/sample-app/scripts/sql/create_tables.sql
+```
+```
+sudo docker exec -it sample-app-db bash
+```
+```
+mysql -u root -p
+```
+```
+GRANT ALL PRIVILEGES ON `sample-app-db`.* TO 'user'@'%' IDENTIFIED BY 'password';
+FLUSH PRIVILEGES;
+```
+```
+exit;
+```
+```
+sudo docker run -itd -p 5000:5000 sample-app
 ```
 
 This can now be accessed via web browser - http://localhost:5000
