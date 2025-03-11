@@ -60,16 +60,16 @@ sudo docker build -t sample-app .
 Run the following command to create and start the containers:
 
 ```
-docker run -d --name sample-app-db -e MARIADB_ROOT_PASSWORD=password -e MARIADB_DATABASE=sample-app-db -e MARIADB_USER=user -e MARIADB_PASSWORD=password   -p 3306:3306 -v /mnt/usb/sample-app-db:/var/lib/mysql --restart always mariadb:latest
+sudo docker run -d --name sample-app-db -e MARIADB_ROOT_PASSWORD=password -e MARIADB_DATABASE=sample-app-db -e MARIADB_USER=user -e MARIADB_PASSWORD=password -p 3306:3306 -v /mnt/usb/sample-app-db:/var/lib/mysql --restart always mariadb:latest
 ```
 ```
-sudo docker exec -i sample-app-db mysql -u root -p password sample-app-db < ~/repos/sample-app/scripts/sql/create_tables.sql
+sudo docker exec -i sample-app-db mariadb -u root -ppassword sample-app-db < ~/repos/sample-app/scripts/sql/create_tables.sql
 ```
 ```
 sudo docker exec -it sample-app-db bash
 ```
 ```
-mysql -u root -p
+mariadb -u root -p
 ```
 ```
 GRANT ALL PRIVILEGES ON `sample-app-db`.* TO 'user'@'%' IDENTIFIED BY 'password';
@@ -77,6 +77,9 @@ FLUSH PRIVILEGES;
 ```
 ```
 exit;
+```
+```
+exit
 ```
 ```
 sudo docker run -itd -p 5000:5000 sample-app
