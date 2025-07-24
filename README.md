@@ -26,7 +26,7 @@ Start the User Input Form app:
 python3 app.py
 ```
 
-This can now be accessed via web browser - http://localhost:5000
+This can now be accessed via web browser - http://localhost:31001
 
 ## Running app using Docker
 
@@ -82,7 +82,7 @@ exit;
 exit
 ```
 ```
-sudo docker run -itd -p 5000:5000 sample-app
+sudo docker run -itd -p 31001:31001 sample-app
 ```
 
-This can now be accessed via web browser - http://localhost:5000
+This can now be accessed via web browser - http://localhost:31001

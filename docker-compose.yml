@@ -21,7 +21,7 @@ services:
     depends_on:
       - db
     ports:
-      - "5000:5000"
+      - "31001:31001"
     environment:
       DB_HOST: db
       DB_USER: user
